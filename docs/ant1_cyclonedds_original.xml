@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- ORIGINAL CycloneDDS config of our ANT1, copied from its Web UI (Configuration page) on 10 Oct 2026.
+     Keep this to restore the robot if a change breaks it. Note: wlan0 is commented out,
+     so the robot's ROS 2 does not talk over Wi-Fi with this file. -->
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+    <Domain Id="any">
+        <General>
+            <Interfaces>
+                <NetworkInterface name='lo' presence_required="true" multicast="true" priority="1"/>
+                <NetworkInterface name='eth0' presence_required="false" multicast="true" priority="100"/>
+                <!-- <NetworkInterface name='wlan0' presence_required="false" multicast="true" priority="100"/> -->
+         </Interfaces>
+        <AllowMulticast>true</AllowMulticast>
+        <!-- <AllowMulticast>spdp</AllowMulticast> -->   <!-- If choosing a Wi-Fi network as interface it is recommended to select spdp instead of true-->
+            <MaxMessageSize>65500B</MaxMessageSize>
+    </General>
+        <Tracing>
+            <Verbosity>config</Verbosity>
+            <OutputFile>/tmp/cyclonedds.log</OutputFile>
+    </Tracing>
+    <Discovery>
+    <ParticipantIndex>auto</ParticipantIndex>
+    <MaxAutoParticipantIndex>120</MaxAutoParticipantIndex>
+</Discovery>
+    </Domain>
+</CycloneDDS>

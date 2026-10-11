@@ -1,0 +1,25 @@
+# one pattern per line (11 Oct: several patterns on one line silently matched NOTHING)
+.venv-ml/
+ws/build/
+ws/install/
+ws/log/
+*.pt
+*.pth
+*.onnx
+*.engine
+challenges/*/data/*.npz
+*.bag
+*.db3
+*.mcap
+__pycache__/
+*.pyc
+docker/build.log
+scripts/*.log
+recon_*/
+# runtime data written by the tools (calibrations, logs, images): per robot / per session, not shared
+data/
+# cfclient/cflib parameter + log TOC cache (written into the current folder)
+cache/
+# tf2 view_frames output
+frames_*.pdf
+frames_*.gv

@@ -1,0 +1,11 @@
+# For TEAMMATES whose user id is not 1000: re-maps the image's user "hack" to your id, so files you create in
+# the shared repo folder (colcon build, data/) are yours. Takes ~1 min, no downloads:
+#   docker build -t hackathon-ros:humble --build-arg UID=$(id -u) --build-arg GID=$(id -g) -f docker/Dockerfile.uid docker
+# (bash scripts/share_image.sh fix-uid does exactly this)
+FROM hackathon-ros:humble
+ARG UID=1000
+ARG GID=1000
+USER root
+RUN (getent group ${GID} || groupmod -g ${GID} hack) && usermod -u ${UID} -g ${GID} hack \
+ && chown -R ${UID}:${GID} /home/hack
+USER hack

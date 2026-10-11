@@ -1,0 +1,12 @@
+# Quick add-on: the Crazyflie layer on top of an EXISTING hackathon-ros:humble image, without a full
+# rebuild (10 Oct: the full rebuild kept timing out on pytorch.org). Same packages as in Dockerfile.
+#   docker build -t hackathon-ros:humble -f docker/Dockerfile.drones docker
+FROM hackathon-ros:humble
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ros-humble-crazyflie ros-humble-crazyflie-py ros-humble-crazyflie-examples \
+    ros-humble-crazyflie-interfaces ros-humble-crazyflie-server-cpp ros-humble-crazyflie-server-py \
+    ros-humble-motion-capture-tracking \
+ && rm -rf /var/lib/apt/lists/* \
+ && pip3 install --no-cache-dir "numpy<2" rowan cflib cfclient
+USER hack
