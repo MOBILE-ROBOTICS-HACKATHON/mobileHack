@@ -1,0 +1,35 @@
+# Dockerfile for ANT1 Motion Bridge & ROS 2 Nodes
+FROM ros:humble-ros-base
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies and CycloneDDS for compatible DDS discovery
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    cmake \
+    git \
+    curl \
+    iputils-ping \
+    net-tools \
+    python3-pip \
+    python3-colcon-common-extensions \
+    ros-humble-rmw-cyclonedds-cpp \
+    ros-humble-geometry-msgs \
+    ros-humble-std-msgs \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+ENV ROS_DOMAIN_ID=0
+
+WORKDIR /ros2_ws
+COPY ws/src/team_pkg /ros2_ws/src/team_pkg
+
+SHELL ["/bin/bash", "-c"]
+RUN source /opt/ros/humble/setup.bash && \
+    colcon build --symlink-install
+
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
+    echo "source /ros2_ws/install/setup.bash" >> ~/.bashrc
+
+# Default entrypoint launches the ANT1 Bridge Node
+CMD ["bash", "-c", "source /opt/ros/humble/setup.bash && source /ros2_ws/install/setup.bash && ros2 run team_pkg ant1_bridge"]

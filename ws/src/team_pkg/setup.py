@@ -32,5 +32,7 @@ setup(
         "vision_link = team_pkg.vision_link:main",
         "vision_calib = team_pkg.vision_calib:main",
         "mission_rescue = team_pkg.mission_rescue:main",
+        "ant1_bridge = team_pkg.ant1_bridge:main",
+        "ant1_dummy_pub = team_pkg.ant1_dummy_pub:main",
     ]},
 )
